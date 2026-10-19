@@ -20,10 +20,16 @@
         fill='#1d4370' fill-opacity='.35' text-anchor='middle'>${label}</text></svg>`;
     return "data:image/svg+xml," + encodeURIComponent(svg);
   };
-  const imgOf = (p) => p.imagen || placeholder(p.categoria);
+  const imgOf = (p) => (p.imagen ? esc(p.imagen) : placeholder(p.categoria));
+
+  // Escapa texto antes de insertarlo en el HTML
+  const esc = (s) =>
+    String(s ?? "").replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
   // ---------- Estado ----------
-  let cart = load();
+  let PRODUCTOS = [];
+  let cart = {};
   let filtro = "todos";
   let busqueda = "";
 
@@ -62,15 +68,15 @@
       .map((p) => `
         <article class="card">
           <div class="card-img">
-            <img src="${imgOf(p)}" alt="${p.nombre}" loading="lazy">
-            <span class="badge">${CATEGORIAS[p.categoria] || p.categoria}</span>
+            <img src="${imgOf(p)}" alt="${esc(p.nombre)}" loading="lazy">
+            <span class="badge">${esc(CATEGORIAS[p.categoria] || p.categoria)}</span>
           </div>
           <div class="card-body">
-            <h3>${p.nombre}</h3>
-            <p>${p.descripcion}</p>
+            <h3>${esc(p.nombre)}</h3>
+            <p>${esc(p.descripcion)}</p>
             <div class="card-foot">
               <span class="price">${formatPrice(p.precio)}</span>
-              <button class="add-btn" data-add="${p.id}">Agregar</button>
+              <button class="add-btn" data-add="${esc(p.id)}">Agregar</button>
             </div>
           </div>
         </article>`)
@@ -108,17 +114,17 @@
           <div class="cart-item">
             <img src="${imgOf(it)}" alt="">
             <div>
-              <h4>${it.nombre}</h4>
+              <h4>${esc(it.nombre)}</h4>
               <small>${formatPrice(it.precio)} c/u</small>
               <div class="qty">
-                <button data-dec="${it.id}" aria-label="Quitar uno">−</button>
+                <button data-dec="${esc(it.id)}" aria-label="Quitar uno">−</button>
                 <span>${it.qty}</span>
-                <button data-inc="${it.id}" aria-label="Agregar uno">+</button>
+                <button data-inc="${esc(it.id)}" aria-label="Agregar uno">+</button>
               </div>
             </div>
             <div class="item-total">
               ${formatPrice(it.precio * it.qty)}
-              <button class="remove" data-remove="${it.id}">Eliminar</button>
+              <button class="remove" data-remove="${esc(it.id)}">Eliminar</button>
             </div>
           </div>`).join("")
       : `<p class="cart-empty">Tu carrito está vacío.<br>¡Agrega productos del catálogo!</p>`;
@@ -210,6 +216,22 @@
   $("#year").textContent = new Date().getFullYear();
   $("#footerWa").href = `https://wa.me/${CONFIG.whatsapp}`;
   renderFilters();
-  renderGrid();
   renderCart();
+
+  // ?v= evita que el navegador muestre una versión vieja del catálogo
+  fetch(`data/productos.json?v=${Date.now()}`)
+    .then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then((data) => {
+      PRODUCTOS = data;
+      cart = load();
+      renderGrid();
+      renderCart();
+    })
+    .catch(() => {
+      $("#empty").textContent = "No pudimos cargar el catálogo. Intenta recargar la página.";
+      $("#empty").hidden = false;
+    });
 })();

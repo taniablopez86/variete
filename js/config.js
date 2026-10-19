@@ -15,4 +15,17 @@ const CONFIG = {
   locale: "es-UY",
 
   instagram: "", // ej: "https://instagram.com/variete"
+
+  // Repositorio de GitHub donde el panel /admin guarda los productos
+  github: {
+    owner: "taniablopez86",
+    repo: "variete",
+    branch: "main",
+  },
+};
+
+// Categorías del catálogo (clave: nombre visible)
+const CATEGORIAS = {
+  laser: "Corte y grabado láser",
+  "3d": "Impresión 3D",
 };
