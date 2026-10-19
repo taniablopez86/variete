@@ -1,5 +1,13 @@
 [
   {
+    "id": "palma",
+    "nombre": "palma",
+    "categoria": "3d",
+    "precio": 400,
+    "descripcion": "palma de minecraft",
+    "imagen": "img/productos/palma-1792436718160.jpg"
+  },
+  {
     "id": "caja-mdf-personalizada",
     "nombre": "Caja de MDF personalizada",
     "categoria": "laser",
