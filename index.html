@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Varieté · Cortes Láser y 3D</title>
+  <meta name="description" content="Varieté: productos personalizados en corte y grabado láser e impresión 3D. Arma tu pedido y envíalo por WhatsApp.">
+  <link rel="icon" href="varieteLogo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#inicio" class="brand">
+        <img src="varieteLogo.png" alt="Varieté">
+        <span>Varieté</span>
+      </a>
+      <nav class="nav">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#nosotros">Nosotros</a>
+      </nav>
+      <button class="cart-btn" id="cartOpen" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="eyebrow">Cortes láser · Impresión 3D</p>
+        <h1>Diseños únicos, hechos a tu medida</h1>
+        <p>Grabados, letreros, regalos personalizados y piezas impresas en 3D. Elige tus productos, arma tu pedido y envíalo directo por WhatsApp.</p>
+        <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+      </div>
+      <img class="hero-logo" src="varieteLogo.png" alt="Logo Varieté Cortes Láser y 3D">
+    </div>
+  </section>
+
+  <main class="container" id="catalogo">
+    <div class="catalog-head">
+      <h2>Catálogo</h2>
+      <div class="filters" id="filters" role="tablist"></div>
+    </div>
+    <input type="search" class="search" id="search" placeholder="Buscar productos…" aria-label="Buscar productos">
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>No encontramos productos con esa búsqueda.</p>
+  </main>
+
+  <section class="about" id="nosotros">
+    <div class="container about-grid">
+      <div class="feature">
+        <h3>Corte y grabado láser</h3>
+        <p>Trabajamos MDF, madera, acrílico y más con acabados precisos.</p>
+      </div>
+      <div class="feature">
+        <h3>Impresión 3D</h3>
+        <p>Piezas decorativas y funcionales en PLA de múltiples colores.</p>
+      </div>
+      <div class="feature">
+        <h3>Personalizado</h3>
+        <p>¿Tienes una idea? Escríbenos y la hacemos realidad.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Varieté · Cortes Láser y 3D</p>
+      <a class="footer-wa" id="footerWa" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+    </div>
+  </footer>
+
+  <!-- Carrito -->
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="cart" id="cart" aria-hidden="true" aria-label="Carrito de compras">
+    <div class="cart-head">
+      <h2>Tu pedido</h2>
+      <button class="icon-btn" id="cartClose" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot">
+      <label class="field">
+        <span>Tu nombre</span>
+        <input type="text" id="customerName" placeholder="Nombre y apellido">
+      </label>
+      <label class="field">
+        <span>Notas del pedido (opcional)</span>
+        <textarea id="customerNotes" rows="2" placeholder="Colores, textos a grabar, fecha de entrega…"></textarea>
+      </label>
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+      <button class="btn btn-wa" id="sendWa">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 21.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm5.4-7.3c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5c0 1.5 1.1 2.9 1.2 3.1s2.1 3.2 5.1 4.5c1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4s.3-1.3.2-1.4l-.5-.2z"/></svg>
+        Enviar pedido por WhatsApp
+      </button>
+      <button class="btn-link" id="clearCart">Vaciar carrito</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
