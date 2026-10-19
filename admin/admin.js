@@ -255,7 +255,7 @@
 
       const producto = { id, ...datos, imagen };
       if (actual) productos[productos.indexOf(actual)] = producto;
-      else productos.push(producto);
+      else productos.unshift(producto); // los nuevos aparecen primero
 
       await guardarProductos(`${actual ? "Edito" : "Agrego"} producto: ${datos.nombre}`);
       cerrarEditor();
